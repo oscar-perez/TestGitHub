@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="../handlebars/handlebars-v4.0.11.js"></script>	
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<title>Basic Test Handle bars</title>
+
+<script>
+	$(document).ready(function () {
+  // Obtenemos el template definido en <body>
+  var theTemplateScript = $("#expressions-template").html();
+
+  // Compilamos el template
+  var theTemplate = Handlebars.compile(theTemplateScript);
+
+  // Definimos los datos.
+  var context={
+    "description": {
+      "escaped": "Using {{}} brackets will result in escaped HTML:",
+      "unescaped": "Using {{{}}} will leave the context as it is:"
+    },
+    "example": "<button> Hello </button>"
+  };
+
+  // Pasamos los datos definidos al template
+  var theCompiledHtml = theTemplate(context);
+
+  // Pasamos la template compilada a la pagina.
+  $('.content-placeholder').html(theCompiledHtml);
+});
+</script>
+
+</head>
+
+
+<body>
+<!-- Template básica, cada elemento entre {} se reemplazará por el valor definido en context -->
+<script id="expressions-template" type="text/x-handlebars-template">
+  <!--Al solo tener dos {{example}} se reemplazará el valor de example como texto. -->
+  {{description.escaped}}
+  {{example}}
+
+  <br><br>
+  <!--Al solo tener dos {{{example}}} se evaluará la expresión de example, creando el boton Hello -->
+  {{description.unescaped}}
+  {{{example}}}
+</script>
+
+<!--El contenido del template mas los datos, se mostrará aquí.-->
+<div class="content-placeholder"></div>
+</body>
+</html>
